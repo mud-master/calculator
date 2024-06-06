@@ -47,6 +47,7 @@ function displayEquation(num1, num2, operator) {
             return num1 + ' ' + operator + ' ' + num2;
         }
     }
+
     else {
         return operate(parseInt(num1), parseInt(num2), operator);
     }
@@ -87,4 +88,10 @@ document.addEventListener("keydown", function (event) {
   }
 
   output.textContent = displayEquation(num1, num2, operator, equationFinished);
+  if (equationFinished) {
+    num1 = null;
+    num2 = null;
+    operator = null;
+    equationFinished = false;
+  }
 });
