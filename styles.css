@@ -31,17 +31,19 @@
     border-style: 5px black;
 }
 
+#enter {
+    display: flex;
+    flex-direction: column;
+    gap: 15px
+}
+
 #numbers, #operators {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     gap: 15px;
-
-    max-width: 250px;
 }
-
-
 
 .number, .operator {
     background-color: white;

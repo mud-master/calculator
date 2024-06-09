@@ -37,7 +37,6 @@ function operate(num1, num2, operate) {
   }
 }
 
-
 function calculate(numsArr) {
   while (numsArr.length > 1) {
     let firstMult = numsArr.indexOf("*");
@@ -74,7 +73,6 @@ function calculate(numsArr) {
   return numsArr[0];
 }
 
-
 // Finish the calculator GUI
 const calc = document.querySelector("#calc"); // The main div in index.html
 const input = document.querySelector("#input"); // User types input in this div
@@ -83,26 +81,66 @@ const input = document.querySelector("#input"); // User types input in this div
 let numsArr = [];
 let validOperators = new Set(["+", "-", "/", "*"]);
 
+document.addEventListener("keydown", (event) => buttonClick(event.key));
+/*
 document.addEventListener("keydown", function (event) {
   const output = document.querySelector("#output"); // output box on top of page
-  console.log('is even: ' + numsArr.length % 2 == 0);
+  console.log("is even: " + (numsArr.length % 2) == 0);
 
   if (event.key >= 0 && event.key <= 9 && numsArr.length % 2 == 0) {
     numsArr.push(event.key);
-    output.textContent = numsArr.join(' ');
+    output.textContent = numsArr.join(" ");
   } else if (event.key >= 0 && event.key <= 9) {
     numsArr[numsArr.length - 1] = numsArr[numsArr.length - 1] + event.key;
-    output.textContent = numsArr.join(' ');
+    output.textContent = numsArr.join(" ");
   } else if (validOperators.has(event.key)) {
     numsArr.push(event.key);
-    output.textContent = numsArr.join(' ');
+    output.textContent = numsArr.join(" ");
   } else if (event.key == "Enter" && numsArr.length % 2 == 1) {
-    console.log('finished');
+    console.log("enter key pressed, numsArr is " + numsArr);
     output.textContent = calculate(numsArr);
     numsArr = [];
+  } else if (event.key == "Backspace" || event.key == "Delete") {
+    numsArr = [];
+    output.textContent = "";
   }
-  console.log('e' + numsArr);
+});
+*/
+function buttonClick(num) {
+  console.log("input is " + num);
+  const output = document.querySelector("#output"); // output box on top of page
+  if (num >= 0 && num <= 9 && numsArr.length % 2 == 0) {
+    numsArr.push(num);
+    output.textContent = numsArr.join(" ");
+    console.log("new number to array. arr is " + numsArr);
+  } else if (num >= 0 && num <= 9) {
+    numsArr[numsArr.length - 1] = numsArr[numsArr.length - 1] + num;
+    output.textContent = numsArr.join(" ");
+    console.log("add num to num. new arr is: " + numsArr);
+  } else if (validOperators.has(num) && numsArr.length % 2 == 1) {
+    numsArr.push(num);
+    output.textContent = numsArr.join(" ");
+    console.log("add operator. new arr is " + numsArr);
+  } else if (num == "Enter" && numsArr.length % 2 == 1) {
+    console.log("about to calculate this array: current arr is: " + numsArr);
+    let answer = calculate(numsArr);
+    console.log("calculated answer is " + answer);
+    output.textContent = answer;
+    numsArr = [answer];
+  } else if (num == "Backspace" || num == "Delete") {
+    numsArr = [];
+    output.textContent = "";
+    console.log("delete");
+  }
+}
 
+const numbers = document.querySelectorAll("button");
+
+numbers.forEach((num) => {
+  num.addEventListener("click", () => {
+    buttonClick(num.getAttribute("data-value"));
+    num.blur();
+  });
 });
 
 /*
